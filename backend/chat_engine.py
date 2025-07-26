@@ -9,11 +9,12 @@ load_dotenv()
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 def build_prompt(chunks, question):
+    chunks_text = '\n'.join(['- ' + chunk for chunk in chunks])
     return f"""
 You are a helpful AI assistant. Use ONLY the below document chunks to answer the question.
 
 Document chunks:
-{''.join(['- ' + chunk + '\n' for chunk in chunks])}
+{chunks_text}
 
 Question: {question}
 
