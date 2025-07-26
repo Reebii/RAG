@@ -226,9 +226,18 @@ async def health_check():
 # Entry point for local dev (Render/production won't use this)
 if __name__ == "__main__":
     import uvicorn
-    host = os.getenv("HOST", "0.0.0.0")
+    
+    # Render provides PORT env var, default to 8000 for local dev
     port = int(os.getenv("PORT", 8000))
-    debug = os.getenv("DEBUG", "true").lower() == "true"
-
-    print("🚀 Starting server...")
-    uvicorn.run(app, host=host, port=port, reload=debug)
+    
+    # Always bind to 0.0.0.0 for cloud deployment compatibility
+    host = "0.0.0.0"
+    
+    # Disable reload in production (when PORT is provided by platform)
+    debug = os.getenv("DEBUG", "false").lower() == "true"
+    reload = debug and not os.getenv("PORT")  # Only reload in local dev
+    
+    print(f"🚀 Starting server on {host}:{port}")
+    print(f"Debug mode: {debug}, Reload: {reload}")
+    
+    uvicorn.run(app, host=host, port=port, reload=reload)
