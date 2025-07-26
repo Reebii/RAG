@@ -19,11 +19,11 @@ app = FastAPI(
 )
 
 # Remove frontend mount to avoid conflict on `/`
-# app.mount("/", StaticFiles(directory="frontend", html=True), name="frontend")
+app.mount("/", StaticFiles(directory="frontend", html=True), name="frontend")
 
 # Redirect `/` to `/docs`
-@app.get("/", include_in_schema=False)
-async def root_redirect():
+@app.get("/")
+async def root():
     return RedirectResponse(url="/docs")
 
 # Add CORS middleware
