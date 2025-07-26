@@ -19,7 +19,7 @@ app = FastAPI(
 )
 
 # Remove frontend mount to avoid conflict on `/`
-app.mount("/", StaticFiles(directory="frontend", html=True), name="frontend")
+app.mount("/app", StaticFiles(directory="frontend", html=True), name="frontend")
 
 # Redirect `/` to `/docs`
 @app.get("/")
