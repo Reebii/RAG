@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: rag-api
+    env: docker
+    repo: https://github.com/Reebii/RAG
+    branch: main
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: HOST
+        value: 0.0.0.0
+      - key: PORT
+        value: 8000
+      - key: DEBUG
+        value: "False"

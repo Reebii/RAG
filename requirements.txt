@@ -1,0 +1,10 @@
+# Minimal requirements - install one by one if needed
+fastapi
+uvicorn
+python-multipart
+openai
+python-dotenv
+requests
+numpy
+PyMuPDF
+faiss-cpu
