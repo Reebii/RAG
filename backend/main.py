@@ -21,13 +21,48 @@ app = FastAPI(
     description="Upload PDFs and chat with their content"
 )
 
-# Mount the frontend from /app
-app.mount("/app", StaticFiles(directory="frontend", html=True), name="frontend")
+# Get the correct path to frontend directory
+# Assumes your project structure is:
+# project/
+#   ├── backend/ (or wherever this file is)
+#   └── frontend/
+try:
+    # Try to find frontend directory relative to current file
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    parent_dir = os.path.dirname(current_dir)
+    frontend_path = os.path.join(parent_dir, "frontend")
+    
+    # If that doesn't exist, try relative to current working directory
+    if not os.path.exists(frontend_path):
+        frontend_path = os.path.join(os.getcwd(), "frontend")
+    
+    # If still doesn't exist, try just "frontend" (original)
+    if not os.path.exists(frontend_path):
+        frontend_path = "frontend"
+    
+    # Debug info
+    print(f"Frontend path: {frontend_path}")
+    print(f"Frontend directory exists: {os.path.exists(frontend_path)}")
+    if os.path.exists(frontend_path):
+        print(f"Files in frontend: {os.listdir(frontend_path)}")
+    
+    # Mount the frontend only if directory exists
+    if os.path.exists(frontend_path):
+        app.mount("/app", StaticFiles(directory=frontend_path, html=True), name="frontend")
+        print("✅ Frontend mounted successfully")
+    else:
+        print("❌ Frontend directory not found, skipping frontend mount")
+        
+except Exception as e:
+    print(f"❌ Error setting up frontend: {e}")
 
-# Redirect root to frontend
+# Redirect root to frontend (only if frontend is mounted)
 @app.get("/")
 async def root():
-    return RedirectResponse(url="/app")
+    if os.path.exists(frontend_path):
+        return RedirectResponse(url="/app")
+    else:
+        return {"message": "RAG PDF Chat API", "status": "running", "frontend": "not available"}
 
 # Enable CORS for all origins (adjust in production)
 app.add_middleware(
