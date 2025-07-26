@@ -327,11 +327,13 @@
     </div>
 
     <script>
-        const API_BASE = 'http://localhost:8000';
+        // Dynamic API base - works for both local development and production
+        const API_BASE = window.location.origin;
         let chatEnabled = false;
 
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('Using API base URL:', API_BASE);
             loadSystemStatus();
             setupEventListeners();
         });
@@ -400,6 +402,7 @@
                     showStatus(`❌ Error: ${result.detail}`, 'error');
                 }
             } catch (error) {
+                console.error('Upload error:', error);
                 showStatus(`❌ Upload failed: ${error.message}`, 'error');
             }
         }
@@ -456,6 +459,7 @@
                     addMessage(`❌ Error: ${result.detail}`, 'bot');
                 }
             } catch (error) {
+                console.error('Chat error:', error);
                 loadingMsg.remove();
                 addMessage(`❌ Chat failed: ${error.message}`, 'bot');
             }
@@ -507,7 +511,7 @@
                     enableChat();
                 }
             } catch (error) {
-                console.log('Could not load system status');
+                console.log('Could not load system status:', error);
             }
         }
     </script>
