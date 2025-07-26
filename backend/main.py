@@ -9,6 +9,8 @@ from backend.pdf_utils import extract_text_from_pdf, validate_pdf_file
 from backend.vector_store import VectorStore, chunk_text
 from backend.embedder import get_embedding
 from backend.chat_engine import get_answer
+from fastapi.staticfiles import StaticFiles
+
 
 # Load environment variables
 load_dotenv()
