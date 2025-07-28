@@ -19,8 +19,8 @@ Document chunks:
 Question: {question}
 
 Instructions:
-- Answer based only on the provided document chunks
-- If the answer is not found in the chunks, say: "I don't know based on the provided documents."
+- Answer based only on the provided context
+- If the answer is not found in the context, say: "I don't know based on the provided documents."
 - Be specific and cite relevant information from the chunks
 - Keep your answer concise but comprehensive
 """
