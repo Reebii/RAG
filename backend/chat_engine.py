@@ -30,7 +30,7 @@ def get_answer(chunks, question):
     
     try:
         response = client.chat.completions.create(
-            model="gpt-4", 
+            model="gpt-4o", 
             messages=[{"role": "user", "content": prompt}],
             max_tokens=500,
             temperature=0.1
