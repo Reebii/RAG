@@ -11,7 +11,7 @@ client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 def build_prompt(chunks, question):
     chunks_text = '\n'.join(['- ' + chunk for chunk in chunks])
     return f"""
-You are a helpful AI assistant. Use ONLY the below document chunks to answer the question.
+You are a helpful AI assistant. Use ONLY the context to answer .
 
 Document chunks:
 {chunks_text}
@@ -30,7 +30,7 @@ def get_answer(chunks, question):
     
     try:
         response = client.chat.completions.create(
-            model="gpt-4",  # or "gpt-3.5-turbo" for cheaper option
+            model="gpt-4", 
             messages=[{"role": "user", "content": prompt}],
             max_tokens=500,
             temperature=0.1
