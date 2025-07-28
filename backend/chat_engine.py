@@ -33,7 +33,7 @@ def get_answer(chunks, question):
             model="gpt-4o", 
             messages=[{"role": "user", "content": prompt}],
             max_tokens=500,
-            temperature=0.1
+            temperature=0.6
         )
         return response.choices[0].message.content.strip()
     except Exception as e:
